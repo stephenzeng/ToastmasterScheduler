@@ -203,6 +203,7 @@ namespace ToastmasterScheduler.Domain.UnitTest
             CollectionAssert.AllItemsAreNotNull(arrangedMeeting.Roles);
             CollectionAssert.AreEqual(_meetingTemplate.Roles.Select(r => r.Type), arrangedMeeting.Roles.Select(r => r.Type));
             CollectionAssert.AllItemsAreNotNull(arrangedMeeting.Roles.Select(r => r.Member));
+            CollectionAssert.AllItemsAreUnique(arrangedMeeting.Roles.Select(r => r.Member));
         }
     }
 }
