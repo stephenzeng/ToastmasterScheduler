@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ToastmasterScheduler.Domain
 {
-    public class Member
+    public class Member : EntityBase
     {
         public string GivenName { get; set; }
         public string Surname { get; set; }

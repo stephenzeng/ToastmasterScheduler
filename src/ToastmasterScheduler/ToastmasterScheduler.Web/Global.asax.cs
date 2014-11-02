@@ -1,9 +1,12 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Raven.Abstractions.Extensions;
 using Raven.Client;
 using Raven.Client.Document;
+using ToastmasterScheduler.Domain;
 
 namespace ToastmasterScheduler.Web
 {
@@ -20,7 +23,7 @@ namespace ToastmasterScheduler.Web
 
             EndRequest += (s, a) =>
             {
-                using (var session = (IDocumentSession) HttpContext.Current.Items["CurrentRequestRavenSession"])
+                using (var session = (IDocumentSession)HttpContext.Current.Items["CurrentRequestRevanSession"])
                 {
                     if (session == null) return;
                     if (Server.GetLastError() != null) return;

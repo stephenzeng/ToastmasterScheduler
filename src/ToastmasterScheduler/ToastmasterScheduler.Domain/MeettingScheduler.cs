@@ -6,96 +6,56 @@ namespace ToastmasterScheduler.Domain
 {
     public class MeettingScheduler
     {
-        private readonly Meeting _meetingTemplate;
+        private readonly MeetingTemplate _meetingTemplate;
         private readonly DateTime _dateTime;
         private readonly IEnumerable<Member> _members;
         private readonly IEnumerable<Meeting> _historicMeetings = Enumerable.Empty<Meeting>(); 
 
-        public MeettingScheduler(Meeting meetingTemplate, DateTime dateTime, IEnumerable<Member> members)
+        public MeettingScheduler(MeetingTemplate meetingTemplate, DateTime dateTime, IEnumerable<Member> members)
         {
             _meetingTemplate = meetingTemplate;
             _dateTime = dateTime;
             _members = members;
-            _historicMeetings = new[]
-            {
-                new Meeting
-                {
-                    DateTime = DateTime.Now.AddDays(-7),
-                    Roles = new[]
-                    {
-                        new MeetingRole
-                        {
-                            Title = "Setup",
-                            Type = RoleTypes.Setup,
-                        },
-                        new MeetingRole
-                        {
-                            Title = "Sergeant at Arms",
-                            Type = RoleTypes.SergeantAtArms,
-                            Member = _members.Single(m => m.GivenName == "Stephen")
-                        },
-                        new MeetingRole
-                        {
-                            Title = "Introduction of Guests",
-                            Type = RoleTypes.GuestIntroduction,
-                            Member = _members.Single(m => m.GivenName == "Tom")
-                        },
-                        new MeetingRole
-                        {
-                            Title = "New Member Induction",
-                            Type = RoleTypes.NewMemberInduction,
-                            Member = _members.Single(m => m.GivenName == "Keith" && m.Surname == "Green"),
-                        },
-                        new MeetingRole
-                        {
-                            Title = "Grammarian",
-                            Type = RoleTypes.Grammarian,
-                            Member = _members.Single(m => m.GivenName == "Jill")
-                        },
-                    }
-                }
-            };
         }
 
-        public Meeting Arrange()
+        public Meeting Initialize()
         {
             var meeting = new Meeting
             {
                 DateTime = _dateTime,
-                Roles = new List<MeetingRole>(),
+                Items = new List<MeetingItem>(),
             };
 
-            foreach (var r in _meetingTemplate.Roles)
+            foreach (var meetingItem in _meetingTemplate.Items)
             {
-                var role = new MeetingRole
+                var item = new MeetingItem
                 {
-                    StartTime = r.StartTime,
-                    MinTime = r.MinTime,
-                    MedTime = r.MedTime,
-                    MaxTime = r.MaxTime,
-                    Type = r.Type,
-                    Member = r.Member,
+                    Description = meetingItem.Role.Description,
+                    Role = meetingItem.Role,
+                    StartTime = meetingItem.StartTime,
+                    MinTime = meetingItem.MinTime,
+                    MedTime = meetingItem.MedTime,
+                    MaxTime = meetingItem.MaxTime,
+                    Member = meetingItem.Member,
                 };
 
-                meeting.Roles.Add(role);
+                meeting.Items.Add(item);
             }
-
-            ArrangeRoles(meeting.Roles);
-
+            
             return meeting;
         }
 
-        private void ArrangeRoles(IEnumerable<MeetingRole> meetingRoles)
+        private void ArrangeRoles(IEnumerable<MeetingItem> meetingRoles)
         {
             var unassignedRoles = meetingRoles.Where(r => r.Member == null);
 
             foreach (var role in unassignedRoles)
             {
-                var roleType = role.Type;
+                //var roleType = role.Type;
                 var unassignedMembers = _members.Where(m => meetingRoles.All(r => r.Member != m));
                 var historicRoleCounts =
-                    from r in _historicMeetings.SelectMany(m => m.Roles)
-                    where r.Type == roleType
+                    from r in _historicMeetings.SelectMany(m => m.Items)
+                    //where r.Type == roleType
                     group r by r.Member
                     into g
                     select new

@@ -10,8 +10,8 @@ namespace ToastmasterScheduler.Domain.UnitTest
     /// <summary>
     /// The basic idea for arranging the members to each of the roles for a meeting is very simple. 
     /// 1. User defines a meeting template:
-    ///    User adds the roles in the order. Roles can be repeated;
-    ///    Roles can be assigned with Members by user;
+    ///    User adds the roles in the order. Items can be repeated;
+    ///    Items can be assigned with Members by user;
     ///    User defines the meeting repeat pattern.
     /// 2. User askes the application to arrange the next meeting based on the template:
     ///    App copies the roles from the template;
@@ -26,7 +26,7 @@ namespace ToastmasterScheduler.Domain.UnitTest
     [TestFixture]
     public class toastmaster_sheduler
     {
-        private Meeting _meetingTemplate;
+        private MeetingTemplate _meetingTemplate;
         private Member[] _members;
 
         public toastmaster_sheduler()
@@ -37,130 +37,130 @@ namespace ToastmasterScheduler.Domain.UnitTest
 
         private void PredefineMeeting()
         {
-            _meetingTemplate = new Meeting
-            {
-                Roles = new[]
-                {
-                    new MeetingRole
-                    {
-                        Title = "Setup",
-                        Type = RoleTypes.Setup,
-                        StartTime = new DateTime(2014, 11, 2, 18, 15, 0),
-                        MinTime = new TimeSpan(0, 0, 10),
-                        MedTime = new TimeSpan(0, 0, 12, 30),
-                        MaxTime = new TimeSpan(0, 0, 15)
-                    },
-                    new MeetingRole
-                    {
-                        Title = "Sergeant at Arms",
-                        Type = RoleTypes.SergeantAtArms,
-                        StartTime = new DateTime(2014, 11, 2, 18, 30, 0),
-                        MinTime = new TimeSpan(0, 0, 0, 30),
-                        MedTime = new TimeSpan(0, 0, 0, 45),
-                        MaxTime = new TimeSpan(0, 0, 1)
-                    },
-                    new MeetingRole
-                    {
-                        Title = "Introduction of Guests",
-                        Type = RoleTypes.GuestIntroduction,
-                        StartTime = new DateTime(2014, 11, 2, 18, 31, 0),
-                        MinTime = new TimeSpan(0, 0, 2),
-                        MedTime = new TimeSpan(0, 0, 2, 30),
-                        MaxTime = new TimeSpan(0, 0, 3)
-                    },
-                    new MeetingRole
-                    {
-                        Title = "New Member Induction",
-                        Type = RoleTypes.NewMemberInduction,
-                        Member = _members.First(m => m.GivenName == "Keith" && m.Surname == "Green"),
-                        StartTime = new DateTime(2014, 11, 2, 18, 35, 0),
-                        MinTime = new TimeSpan(0, 0, 1),
-                        MedTime = new TimeSpan(0, 0, 1, 30),
-                        MaxTime = new TimeSpan(0, 0, 2)
-                    },
-                    new MeetingRole
-                    {
-                        Title = "Grammarian",
-                        Type = RoleTypes.Grammarian,
-                        StartTime = new DateTime(2014, 11, 2, 18, 38, 0),
-                        MinTime = new TimeSpan(0, 0, 1),
-                        MedTime = new TimeSpan(0, 0, 1, 30),
-                        MaxTime = new TimeSpan(0, 0, 2)
-                    },
-                    new MeetingRole
-                    {
-                        Title = "Inspiration",
-                        Type = RoleTypes.Inspiration,
-                        StartTime = new DateTime(2014, 11, 2, 18, 41, 0),
-                        MinTime = new TimeSpan(0, 0, 1),
-                        MedTime = new TimeSpan(0, 0, 1, 30),
-                        MaxTime = new TimeSpan(0, 0, 2)
-                    },
-                    new MeetingRole
-                    {
-                        Title = "Project speech",
-                        Type = RoleTypes.ProjectSpeech,
-                        StartTime = new DateTime(2014, 11, 2, 18, 44, 0),
-                        MinTime = new TimeSpan(0, 0, 5),
-                        MedTime = new TimeSpan(0, 0, 6),
-                        MaxTime = new TimeSpan(0, 0, 7)
-                    },
-                    new MeetingRole
-                    {
-                        Title = "Evaluator",
-                        Type = RoleTypes.Evaluator,
-                        StartTime = new DateTime(2014, 11, 2, 18, 52, 0),
-                        MinTime = new TimeSpan(0, 0, 2),
-                        MedTime = new TimeSpan(0, 0, 2, 30),
-                        MaxTime = new TimeSpan(0, 0, 3)
-                    },
-                    new MeetingRole
-                    {
-                        Title = "Project speech",
-                        Type = RoleTypes.ProjectSpeech,
-                        StartTime = new DateTime(2014, 11, 2, 18, 56, 0),
-                        MinTime = new TimeSpan(0, 0, 5),
-                        MedTime = new TimeSpan(0, 0, 6),
-                        MaxTime = new TimeSpan(0, 0, 7)
-                    },
-                    new MeetingRole
-                    {
-                        Title = "Evaluator",
-                        Type = RoleTypes.Evaluator,
-                        StartTime = new DateTime(2014, 11, 2, 19, 4, 0),
-                        MinTime = new TimeSpan(0, 0, 2),
-                        MedTime = new TimeSpan(0, 0, 2, 30),
-                        MaxTime = new TimeSpan(0, 0, 3)
-                    },
-                    new MeetingRole
-                    {
-                        Title = "Table Topics Master",
-                        Type = RoleTypes.TableTopicsMaster,
-                        StartTime = new DateTime(2014, 11, 2, 19, 8, 0),
-                        MinTime = new TimeSpan(0, 0, 8),
-                        MedTime = new TimeSpan(0, 0, 9),
-                        MaxTime = new TimeSpan(0, 0, 10)
-                    },
-                    new MeetingRole
-                    {
-                        Title = "Tonic",
-                        Type = RoleTypes.Tonic,
-                        StartTime = new DateTime(2014, 11, 2, 19, 19, 0),
-                        MinTime = new TimeSpan(0, 0, 0, 30),
-                        MedTime = new TimeSpan(0, 0, 0, 45),
-                        MaxTime = new TimeSpan(0, 0, 1)
-                    },
-                    new MeetingRole
-                    {
-                        Title = "Table Topics Evaluator",
-                        Type = RoleTypes.TableTopicsEvaluator,
-                        StartTime = new DateTime(2014, 11, 2, 19, 21, 0),
-                        MinTime = new TimeSpan(0, 0, 4),
-                        MedTime = new TimeSpan(0, 0, 5),
-                        MaxTime = new TimeSpan(0, 0, 6)
-                    },
-                },
-            };
+            //_meetingTemplate = new Meeting
+            //{
+            //    Items = new[]
+            //    {
+            //        new MeetingItem
+            //        {
+            //            Description = "Setup",
+            //            Type = RoleTypes.Setup,
+            //            StartTime = new DateTime(2014, 11, 2, 18, 15, 0),
+            //            MinTime = new TimeSpan(0, 0, 10),
+            //            MedTime = new TimeSpan(0, 0, 12, 30),
+            //            MaxTime = new TimeSpan(0, 0, 15)
+            //        },
+            //        new MeetingItem
+            //        {
+            //            Description = "Sergeant at Arms",
+            //            Type = RoleTypes.SergeantAtArms,
+            //            StartTime = new DateTime(2014, 11, 2, 18, 30, 0),
+            //            MinTime = new TimeSpan(0, 0, 0, 30),
+            //            MedTime = new TimeSpan(0, 0, 0, 45),
+            //            MaxTime = new TimeSpan(0, 0, 1)
+            //        },
+            //        new MeetingItem
+            //        {
+            //            Description = "Introduction of Guests",
+            //            Type = RoleTypes.GuestIntroduction,
+            //            StartTime = new DateTime(2014, 11, 2, 18, 31, 0),
+            //            MinTime = new TimeSpan(0, 0, 2),
+            //            MedTime = new TimeSpan(0, 0, 2, 30),
+            //            MaxTime = new TimeSpan(0, 0, 3)
+            //        },
+            //        new MeetingItem
+            //        {
+            //            Description = "New Member Induction",
+            //            Type = RoleTypes.NewMemberInduction,
+            //            Member = _members.First(m => m.GivenName == "Keith" && m.Surname == "Green"),
+            //            StartTime = new DateTime(2014, 11, 2, 18, 35, 0),
+            //            MinTime = new TimeSpan(0, 0, 1),
+            //            MedTime = new TimeSpan(0, 0, 1, 30),
+            //            MaxTime = new TimeSpan(0, 0, 2)
+            //        },
+            //        new MeetingItem
+            //        {
+            //            Description = "Grammarian",
+            //            Type = RoleTypes.Grammarian,
+            //            StartTime = new DateTime(2014, 11, 2, 18, 38, 0),
+            //            MinTime = new TimeSpan(0, 0, 1),
+            //            MedTime = new TimeSpan(0, 0, 1, 30),
+            //            MaxTime = new TimeSpan(0, 0, 2)
+            //        },
+            //        new MeetingItem
+            //        {
+            //            Description = "Inspiration",
+            //            Type = RoleTypes.Inspiration,
+            //            StartTime = new DateTime(2014, 11, 2, 18, 41, 0),
+            //            MinTime = new TimeSpan(0, 0, 1),
+            //            MedTime = new TimeSpan(0, 0, 1, 30),
+            //            MaxTime = new TimeSpan(0, 0, 2)
+            //        },
+            //        new MeetingItem
+            //        {
+            //            Description = "Project speech",
+            //            Type = RoleTypes.ProjectSpeech,
+            //            StartTime = new DateTime(2014, 11, 2, 18, 44, 0),
+            //            MinTime = new TimeSpan(0, 0, 5),
+            //            MedTime = new TimeSpan(0, 0, 6),
+            //            MaxTime = new TimeSpan(0, 0, 7)
+            //        },
+            //        new MeetingItem
+            //        {
+            //            Description = "Evaluator",
+            //            Type = RoleTypes.Evaluator,
+            //            StartTime = new DateTime(2014, 11, 2, 18, 52, 0),
+            //            MinTime = new TimeSpan(0, 0, 2),
+            //            MedTime = new TimeSpan(0, 0, 2, 30),
+            //            MaxTime = new TimeSpan(0, 0, 3)
+            //        },
+            //        new MeetingItem
+            //        {
+            //            Description = "Project speech",
+            //            Type = RoleTypes.ProjectSpeech,
+            //            StartTime = new DateTime(2014, 11, 2, 18, 56, 0),
+            //            MinTime = new TimeSpan(0, 0, 5),
+            //            MedTime = new TimeSpan(0, 0, 6),
+            //            MaxTime = new TimeSpan(0, 0, 7)
+            //        },
+            //        new MeetingItem
+            //        {
+            //            Description = "Evaluator",
+            //            Type = RoleTypes.Evaluator,
+            //            StartTime = new DateTime(2014, 11, 2, 19, 4, 0),
+            //            MinTime = new TimeSpan(0, 0, 2),
+            //            MedTime = new TimeSpan(0, 0, 2, 30),
+            //            MaxTime = new TimeSpan(0, 0, 3)
+            //        },
+            //        new MeetingItem
+            //        {
+            //            Description = "Table Topics Master",
+            //            Type = RoleTypes.TableTopicsMaster,
+            //            StartTime = new DateTime(2014, 11, 2, 19, 8, 0),
+            //            MinTime = new TimeSpan(0, 0, 8),
+            //            MedTime = new TimeSpan(0, 0, 9),
+            //            MaxTime = new TimeSpan(0, 0, 10)
+            //        },
+            //        new MeetingItem
+            //        {
+            //            Description = "Tonic",
+            //            Type = RoleTypes.Tonic,
+            //            StartTime = new DateTime(2014, 11, 2, 19, 19, 0),
+            //            MinTime = new TimeSpan(0, 0, 0, 30),
+            //            MedTime = new TimeSpan(0, 0, 0, 45),
+            //            MaxTime = new TimeSpan(0, 0, 1)
+            //        },
+            //        new MeetingItem
+            //        {
+            //            Description = "Table Topics Evaluator",
+            //            Type = RoleTypes.TableTopicsEvaluator,
+            //            StartTime = new DateTime(2014, 11, 2, 19, 21, 0),
+            //            MinTime = new TimeSpan(0, 0, 4),
+            //            MedTime = new TimeSpan(0, 0, 5),
+            //            MaxTime = new TimeSpan(0, 0, 6)
+            //        },
+            //    },
+            //};
         }
 
         private void SetupMembers()
@@ -193,17 +193,17 @@ namespace ToastmasterScheduler.Domain.UnitTest
             var scheduler = new MeettingScheduler(_meetingTemplate, meetingDate, _members);
             
             //act
-            var arrangedMeeting = scheduler.Arrange();
+            var arrangedMeeting = scheduler.Initialize();
 
             //assert
             Assert.AreNotSame(_meetingTemplate, arrangedMeeting);
             Assert.AreEqual(meetingDate, arrangedMeeting.DateTime);
-            Assert.AreEqual(_meetingTemplate.Roles.Count, arrangedMeeting.Roles.Count);
+            Assert.AreEqual(_meetingTemplate.Items.Count, arrangedMeeting.Items.Count);
             
-            CollectionAssert.AllItemsAreNotNull(arrangedMeeting.Roles);
-            CollectionAssert.AreEqual(_meetingTemplate.Roles.Select(r => r.Type), arrangedMeeting.Roles.Select(r => r.Type));
-            CollectionAssert.AllItemsAreNotNull(arrangedMeeting.Roles.Select(r => r.Member));
-            CollectionAssert.AllItemsAreUnique(arrangedMeeting.Roles.Select(r => r.Member));
+            CollectionAssert.AllItemsAreNotNull(arrangedMeeting.Items);
+            //CollectionAssert.AreEqual(_meetingTemplate.Items.Select(r => r.Type), arrangedMeeting.Items.Select(r => r.Type));
+            CollectionAssert.AllItemsAreNotNull(arrangedMeeting.Items.Select(r => r.Member));
+            CollectionAssert.AllItemsAreUnique(arrangedMeeting.Items.Select(r => r.Member));
         }
     }
 }

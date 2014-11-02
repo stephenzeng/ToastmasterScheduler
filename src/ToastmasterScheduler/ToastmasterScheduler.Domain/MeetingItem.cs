@@ -1,14 +1,13 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace ToastmasterScheduler.Domain
 {
-    public class MeetingRole
+    public class MeetingItem
     {
-        public string Title { get; set; }
-        public RoleTypes Type { get; set; }
+        public string Description { get; set; }
+        public Role Role { get; set; }
         public Member Member { get; set; }
-        public DateTime StartTime { get; set; }
+        public TimeSpan StartTime { get; set; }
         public TimeSpan MinTime { get; set; }
         public TimeSpan MedTime { get; set; }
         public TimeSpan MaxTime { get; set; }

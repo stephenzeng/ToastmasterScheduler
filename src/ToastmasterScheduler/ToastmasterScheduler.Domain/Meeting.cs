@@ -3,10 +3,9 @@ using System.Collections.Generic;
 
 namespace ToastmasterScheduler.Domain
 {
-    public class Meeting
+    public class Meeting : EntityBase
     {
-        public int Id { get; set; }
         public DateTime DateTime { get; set; }
-        public IList<MeetingRole> Roles { get; set; }
+        public IList<MeetingItem> Items { get; set; }
     }
 }
