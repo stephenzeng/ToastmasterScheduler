@@ -69,9 +69,11 @@ namespace ToastmasterScheduler.IntegrationTest
 
                 CollectionAssert.AllItemsAreNotNull(meeting.Items.Select(i => i.Member));
                 CollectionAssert.AllItemsAreUnique(meeting.Items.Select(i => i.Member.Id));
-                //Assert.AreEqual(meetingDate, meeting.DateTime);
-                //CollectionAssert.AreEqual(meetingTemplate.Items.Select(i => i.Role.Id), meeting.Items.Select(i => i.Role.Id));
             }
         }
+
+        //todo:implement some of the roles may not require members assigned
+        //todo:add a test that some vacancies are filled manually before auto-fill process
+        
     }
 }
