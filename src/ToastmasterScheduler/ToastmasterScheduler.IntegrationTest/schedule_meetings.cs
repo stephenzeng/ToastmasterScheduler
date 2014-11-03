@@ -2,6 +2,7 @@
 using System.Linq;
 using NUnit.Framework;
 using ToastmasterScheduler.Domain;
+using ToastmasterScheduler.Web;
 
 namespace ToastmasterScheduler.IntegrationTest
 {
@@ -14,31 +15,63 @@ namespace ToastmasterScheduler.IntegrationTest
             //arrange
             int meetingId;
             MeetingTemplate meetingTemplate;
-            Meeting initializedMeeting;
             var meetingDate = DateTime.Now;
 
             using (var session = DocumentStore.OpenSession())
             {
                 meetingTemplate = session.Query<MeetingTemplate>().First(t => t.Enabled);
-                var members = session.Query<Member>();
-
-                var scheduler = new MeettingScheduler(meetingTemplate, meetingDate, members);
-                var meeting = scheduler.Initialize();
+                var scheduler = new MeettingScheduler(session);
+                
+                //act
+                var meeting = scheduler.Initialize(meetingTemplate, meetingDate);
 
                 session.Store(meeting);
                 meetingId = meeting.Id;
                 session.SaveChanges();
             }
 
-            //act
+            //assert
             using (var session = DocumentStore.OpenSession())
             {
-                initializedMeeting = session.Load<Meeting>(meetingId);
+                var meeting = session.Load<Meeting>(meetingId);
+
+                Assert.AreEqual(meetingDate, meeting.DateTime);
+                CollectionAssert.AreEqual(meetingTemplate.Items.Select(i => i.Role.Id), meeting.Items.Select(i => i.Role.Id));
+            }
+        }
+
+        [Test]
+        public void fill_vacancies_for_a_meeting()
+        {
+            //arrange
+            int meetingId;
+            var meetingDate = DateTime.Now;
+
+            using (var session = DocumentStore.OpenSession())
+            {
+                var meetingTemplate = session.Query<MeetingTemplate>().First(t => t.Enabled);
+
+                var scheduler = new MeettingScheduler(session);
+                var meeting = scheduler.Initialize(meetingTemplate, meetingDate);
+
+                //act
+                scheduler.FillVacancies(meeting);
+
+                session.Store(meeting);
+                meetingId = meeting.Id;
+                session.SaveChanges();
             }
 
             //assert
-            Assert.AreEqual(meetingDate, initializedMeeting.DateTime);
-            CollectionAssert.AreEqual(meetingTemplate.Items.Select(i => i.Role.Id), initializedMeeting.Items.Select(i => i.Role.Id));
+            using (var session = DocumentStore.OpenSession())
+            {
+                var meeting = session.Load<Meeting>(meetingId);
+
+                CollectionAssert.AllItemsAreNotNull(meeting.Items.Select(i => i.Member));
+                CollectionAssert.AllItemsAreUnique(meeting.Items.Select(i => i.Member.Id));
+                //Assert.AreEqual(meetingDate, meeting.DateTime);
+                //CollectionAssert.AreEqual(meetingTemplate.Items.Select(i => i.Role.Id), meeting.Items.Select(i => i.Role.Id));
+            }
         }
     }
 }

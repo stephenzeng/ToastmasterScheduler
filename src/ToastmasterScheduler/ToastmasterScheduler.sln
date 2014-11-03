@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToastmasterScheduler.Web", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToastmasterScheduler.Domain", "ToastmasterScheduler.Domain\ToastmasterScheduler.Domain.csproj", "{E7E627D1-A21B-41B4-AAAC-9B08D9068669}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToastmasterScheduler.Domain.UnitTest", "ToastmasterScheduler.Domain.UnitTest\ToastmasterScheduler.Domain.UnitTest.csproj", "{84A476ED-5785-450E-8D2F-061CFE00B6C4}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{78B69883-6715-4EC6-B474-F424882E7DFC}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
@@ -33,10 +31,6 @@ Global
 		{E7E627D1-A21B-41B4-AAAC-9B08D9068669}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7E627D1-A21B-41B4-AAAC-9B08D9068669}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7E627D1-A21B-41B4-AAAC-9B08D9068669}.Release|Any CPU.Build.0 = Release|Any CPU
-		{84A476ED-5785-450E-8D2F-061CFE00B6C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{84A476ED-5785-450E-8D2F-061CFE00B6C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{84A476ED-5785-450E-8D2F-061CFE00B6C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{84A476ED-5785-450E-8D2F-061CFE00B6C4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B882F176-5CE1-4C6C-9E4F-428D477BDBD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B882F176-5CE1-4C6C-9E4F-428D477BDBD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B882F176-5CE1-4C6C-9E4F-428D477BDBD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
